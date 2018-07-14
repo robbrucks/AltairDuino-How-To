@@ -2,10 +2,10 @@
 
 **Note:** This document assumes you have already successfully connected using some type of serial terminal.
 
-The Altair Duino comes with many built-in programs, and if you've loaded the optional SD card, it also includes many floppy and hard disk images for you to use.
+The Altair Duino comes with many built-in programs and, if you've loaded the optional SD card, it also includes many floppy and hard disk images for you to use.
 
 The included programs are stored in the following areas on the AltairDuino:
-  * built-in ROM: Not true ROM, but rather programs that have been hard-coded inside the Arduino code
+  * Built-in ROM: Not true ROM, but rather programs that have been hard-coded inside the Arduino code
     * Binary Programs: these start running immediately after loading
     * BASIC Programs: these require a version of BASIC to be loaded and running before they can be loaded
   * Virtual disk files on the SD Card (inserted into the SD slot on the Altair board)
@@ -279,7 +279,7 @@ The switches A15 thru A0 are used as follows when unmounting a hard disk image:
 * Altair will only boot from the hard drive mounted on platter 0 of unit 1 (drive letter "A:")
 * Mount the bootable floppy in drive 0 (see above)
 * Use the following switch settings to boot from floppy
-  * Switches A15 thru A8 are ignored
+  * Set switches A15 thru A8 down
   * Set switches A7 thru A0 to 00001110
   * Press switch AUX1 down
 
