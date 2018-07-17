@@ -83,7 +83,7 @@ require a serial terminal as a user interface.
 
 * This prints a list of available ROM-Based BASIC Programs 
 
-      0  "00000001) [this directory]"
+      0  "00000000) [this directory]"
       1  "00000001) 23-match"
       2  "00000010) amazing"
       3  "00000011) baccarat"
@@ -137,7 +137,7 @@ require a serial terminal as a user interface.
 **NOTE:** Some BASIC programs will not run in 4k Basic due to their size, but all should be able to run in 16k ROM Basic. So this example uses 16k ROM Basic.
 **NOTE:** When you display the program list while Basic is running, **the list will be read in by the Basic interpreter as a program**.  You will need to clear the program memory by issuing a `NEW` command to Basic. This tells it that you are starting a new program and to clear the program memory.
 
-* Load a BASIC Program (For this example I chose "Wumpus")
+* Load a BASIC Program (for this example I chose "Wumpus")
 
       Type `NEW` and press `ENTER` to clear the progrm memory
       Set switches A15 thru A8 to zero (down)
