@@ -1,15 +1,34 @@
 # Floppy Drives on the Altair
-* There are many floppy drive images included on the SD card for the AltairDuino.
-* Due to the method of referencing of files on the SD card, there is a limit of 255 floppy drive images on the SD card.
+* There are many floppy images included on the SD card for the AltairDuino.
+* The Altair is configured to emulate 4 floppy drives, 0 to 3, but you can modify the Arduino software to emulate up to 16 floopy drives.
+* For most disk operating systems on the Altair, you reference the floppy drives as follows in the OS:
+  * Drive 0 is "A:"
+  * Drive 1 is "B:"
+  * Drive 2 is "C:"
+  * Drive 3 is "D:"
+* You can mount virtual disk drive files stored on the SD card, boot from them, and even create new ones.
 
 ## Virtual disk files on the SD card
-* You can mount virtual disk drive files stored on the SD card, boot from them, and even create new ones.
-* Unmounting a drive is optional, when you mount the drive with a new disk file any currently mounted disk file is automatically unmounted first.
+* Floppy image files on the SD card are named "DISKxx.DSK", where "xx" is a HEX number between 01 and FF (00 is reserved).
+* Due to the method used to name floppy image files on the SD card, there is a limit of 255 floppy drive images on the SD card.
+* You can create a new image by referencing a non-existent image file. The emulator will create the floppy image file as soon as it writes to it.
+* Attempting to mount disk 00 causes the contents of DISKDIR.TXT to be listed to the serial terminal.
+* You can mount the same disk image to multiple drives, although this may cause confusion for the OS.
+* Unmounting an image before mounting a different one is optional. When you mount the drive with a new image file any currently mounted image
+file is automatically unmounted first.
 
-### Floppy drives
-* Setting switches A15 thru A12 to 0001 tell Altair that you want to manipulate floppy drives
+## Manipulating Floppy drives
+* Setting switches A15 thru A12 to 0001 instruct Altair that you wish to mount or unmount floppy drives
+* Switches A11 thru A8 are used to select the floppy drive unit for mounting or unmounting
+  * 0000 = Drive 0 (A:)
+  * 0001 = Drive 1 (B:)
+  * 0010 = Drive 2 (C:)
+  * 0011 = Drive 3 (D:)
+* Switches A7 thru A0 are used to select the floppy image to mount (ignored for unmounting)
+* Pressing the **AUX2 switch DOWN mounts** the selected image onto the specified drive unit
+* Pressing the **AUX2 switch UP unmounts** any mounted image from the specified drive unit
 
-#### Listing virtual floppy disk files on the SD card
+## Listing virtual floppy disk files on the SD card
 * Set switches A15 thru A0 down
 * Set switch A12 up
 * Press AUX2 down
@@ -45,7 +64,7 @@ The following list will be displayed on the terminal
     These images were put together by Mike Douglas.
     See README.TXT for more information.
 
-#### Mounting floppy drives
+## Mounting images on floppy drives
 The switches A15 thru A0 are used as follows when mounting or unmounting a floppy disk image:
 * A15 thru A12 are set to 0001 to designate that a **floppy drive** image is to be mounted or unmounted
 * A11 thru A8 are set to the 4 bit number representing virtual floppy drives 0 thru 15 (Drive letters "A:" thru "P:")
@@ -57,7 +76,7 @@ The switches A15 thru A0 are used as follows when mounting or unmounting a flopp
 
       [mounted disk image 'DISK0A.DSK: Time Sharing Basic V2' in drive 0]
 
-#### **UN**Mounting floppy drives
+## **UN**Mounting images from floppy drives
 The switches A15 thru A0 are used as follows when mounting or unmounting a floppy disk image:
 * A15 thru A12 are set to 0001 to designate that a **floppy drive** image is to be mounted or unmounted
 * A11 thru A8 are set to the 4 bit number representing virtual floppy drives 0 thru 15 (Drive letters "A:" thru "P:")
@@ -67,69 +86,12 @@ The switches A15 thru A0 are used as follows when mounting or unmounting a flopp
 
       [unmounted drive 0]
 
-#### Booting from a mounted floppy
+## Booting from a mounted floppy
 * Altair will only boot from the floppy mounted on virtual floppy drive 0 (drive letter "A:")
 * Mount the bootable floppy in drive 0 (see above)
+* Be sure to set switches A15 thru A12 to down before booting
 * Use the following switch settings to boot from floppy
-  * Switches A15 thru A8 are ignored
-  * Set switches A7 thru A0 down
-  * Set switch A3 up
-  * Press switch AUX1 down
-
-### Hard Drives
-* Setting switches A15 thru A12 to 0011 tell Altair that you want to manipulate hard drives
-
-#### Listing virtual hard disk files on the SD card
-* Set switches A15 thru A0 down
-* Set switches A13 and A12 up
-* Press AUX2 down
-
-The following list will be displayed on the terminal
-
-    ---------------------------------------------
-
-    Available hard disk images:
-    ---------------------------------------------
-    0001) HDSK01.DSK: Altair Hard Disk BASIC
-    0010) HDSK02.DSK: Altair Accounting System
-    0011) HDSK03.DSK: Mike Douglas' 88-HDSK CP/M
-
-    ---------------------------------------------
-
-    These images were put together by Mike Douglas.
-
-    See README.TXT for more information.
-
-#### Mounting hard drives
-You can mount up to four hard drive images as "**platters**" on disk unit 1 (the only unit available)
-The switches A15 thru A0 are used as follows when mounting a hard disk image:
-* A15 thru A12 are set to 0011 to designate that a **hard drive** image is to be mounted or unmounted
-* A11 and A10 are set to 00 (selects hard disk unit 1)
-* A9 and A8 are set to the 2 bit number representing the desired disk platter (0 thru 3)
-* A7 thru A0 are set to the 8 bit number representing the hard disk image to mount
-  * The 8-bit disk number corresponds to the hex xx in the HDSKxx.DSK files on the SD card.
-  * For example, setting 00000010 will load hard disk image "HDSK02.DSK" (00000010 in binary equals 02 in hex)
-* Press the AUX2 switch down
-* A message similar to this is displayed on the terminal:
-
-      [mounted hard disk image 'HDSK02.DSK: Altair Accounting System' in platter 0 of unit 1]
-
-#### **UN**Mounting hard drives
-The switches A15 thru A0 are used as follows when unmounting a hard disk image:
-* A15 thru A12 are set to 0011 to designate that a **hard drive** image is to be mounted or unmounted
-* A11 and A10 are set to 00 (selects hard disk unit 1)
-* A9 and A8 are set to the 2 bit number representing the desired disk platter (0 thru 3)
-* A7 thru A0 are ignored
-* Press the AUX2 switch **UP**
-* A message similar to this is displayed on the terminal:
-
-      [unmounted platter 0 of unit 1]
-
-#### Booting from a mounted hard drive
-* Altair will only boot from the hard drive mounted on platter 0 of unit 1 (drive letter "A:")
-* Mount the bootable floppy in drive 0 (see above)
-* Use the following switch settings to boot from floppy
-  * Set switches A15 thru A8 down
-  * Set switches A7 thru A0 to 00001110
+  * Switches A15 thru A1 set to 0 (down)
+  * Set switch A3 up (sets the Disk Boot ROM)
   * Press switch AUX1 down
 

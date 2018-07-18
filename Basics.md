@@ -142,6 +142,6 @@ require a serial terminal as a user interface.
       Type `NEW` and press `ENTER` to clear the progrm memory
       Set switches A15 thru A8 to zero (down)
       Set switches A7 thru A0 to the binary number for the program, in this example `00 101 111` for Wumpus
-      Press AUX2 down to load the program into memory; you will see the program typed into Basic on your terminal screen
+      Press AUX2 down to load the program into memory; you will see the program loaded into Basic on your terminal screen
       Type `RUN` and press `ENTER` to run Wumpus
        
